@@ -1,33 +1,28 @@
 import './App.css';
-import React from 'react';
+import React, { useRef, useEffect, useState, useCallbac } from "react";
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import styled from 'styled-components';
 
-import skullGif from './assets/CyberSKull.gif'
+// ASSETS
+import skullGif from './assets/CyberSKull.gif';
+// COMPONENTS
+import { Modal } from './components/Modal';
+// UI ELEMENTS
+import * as uilib from './components/uilib';
+
 
 
 function App() {
-    
-    const ContenedorPrimario = styled.div`
-        background: #242526;
-        width: 100%;
-        height: 100%;
-    `
-    const ContenedorSecundario = styled.div`
-        width: 100%;
-        height: 100%;
-    `
-    const BotonesLanding = styled.button`
-        width: 49%;
-        height: 100%;
-        padding: 5px;
-        margin-top: 50px;
-        margin-left: 10px
-        margin-right: 12px;  
-    
-    `
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => {
+        setShowModal( () => {
+            const state = {showModal};
+            this.setShowModal(state);
+        });            
+    }
 
     return (
     
@@ -37,13 +32,14 @@ function App() {
      </head>   
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
      <body>
-
+         
+         <>
         <Container fluid style= {{ backgroundColor: '#242526',
                                    height: '1000px',
                                    paddingTop: '0px',
                                    }}>
 
-        <Row id='DisplayTop' style={{ height: '100px',
+            <Row id='DisplayTop' style={{ height: '100px',
                                    paddingLeft: '0%',
                                    paddingRight: '5%',
                                    paddingTop: '3%',
@@ -53,14 +49,14 @@ function App() {
            <Col xs={1}>
            </Col>
            <Col xs={5}>
-            <ContenedorSecundario>
+            <uilib.ContenedorSecundario>
                 <img id='landing-image' src={skullGif} alt="loading..."
                  />            
-            </ContenedorSecundario>
+            </uilib.ContenedorSecundario>
            </Col>
 
            <Col xs={6}>
-           <ContenedorPrimario id="Contenedor-texto-main">
+           <uilib.ContenedorPrimario id="Contenedor-texto-main">
                <div className='Landing-text'>
                 <p style = {{ fontFamily:  "Courier",
                                  fontSize: '45px',
@@ -88,23 +84,40 @@ function App() {
                     </p>  
                </div>
                <div id='Landing-buttons'>
-                   <BotonesLanding className='boton-landing'>
-                    MINT
-                   </BotonesLanding>
-                   <BotonesLanding className='boton-landing'>
+                   <uilib.button className='boton-landing' id='mint-button'
+                        onSubmit={openModal} >
+                    <strong>MINT</strong>                     
+                   </uilib.button>
+                   <uilib.button className='boton-landing' id='store-button'>
                    STORE
-                   </BotonesLanding>
-               </div>       
-            </ContenedorPrimario>
+                   </uilib.button>
+               </div>
+
+                      
+            </uilib.ContenedorPrimario>
            </Col>
            <Col xs={1}>
            </Col>
         </Row>
-                
+        
+        <div style={{ marginTop: '1000px' }}>
+               
+        </div>
+        <Modal 
+            showModal={showModal} 
+            setShowModal={setShowModal} 
+        />
+
         </Container>
-      </body>
+        </>
+        
+       
+        
+       
+    
+    </body>
     </div>
   );
-}
+};
 
 export default App;
